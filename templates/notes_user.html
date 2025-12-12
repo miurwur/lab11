@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки пользователя</title>
+</head>
+<body>
+<h1>Заметки пользователя {{ user_login }}</h1>
+
+<h2>Создать новую заметку</h2>
+<form method="post" action="/notes/create">
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <label>Заголовок: <input type="text" name="title"></label><br>
+    <label>Текст:<br>
+        <textarea name="text" rows="4" cols="50"></textarea>
+    </label><br>
+    <label>Теги (через запятую): <input type="text" name="tags"></label><br>
+    <button type="submit">Сохранить</button>
+</form>
+
+<h2>Список заметок</h2>
+<ul>
+{% for note in notes %}
+    <li>
+        <strong>{{ note.title }}</strong> ({{ note.created_at }})<br>
+        {{ note.text }}<br>
+        Теги: {{ note.tags }}
+        <form method="post" action="/notes/delete" style="display:inline;">
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+            <input type="hidden" name="note_id" value="{{ note.id }}">
+            <button type="submit">Удалить</button>
+        </form>
+    </li>
+{% endfor %}
+</ul>
+</body>
+</html>
