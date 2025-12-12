@@ -1,4 +1,3 @@
-# controllers/database_controller.py
 from typing import Optional
 
 from models import User, UsersManager
