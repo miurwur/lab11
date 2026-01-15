@@ -70,23 +70,6 @@ def note_list(request):
 
 
 @login_required
-def note_create(request):
-    """Создание новой заметки"""
-    if request.method == 'POST':
-        form = NoteForm(request.POST)
-        if form.is_valid():
-            note = form.save(commit=False)
-            note.user = request.user
-            note.save()
-            messages.success(request, 'Заметка создана!')
-            return redirect('note_list')
-    else:
-        form = NoteForm()
-
-    return render(request, 'notes_app/note_form.html', {'form': form})
-
-
-@login_required
 def note_edit(request, pk):
     """Редактирование существующей заметки"""
     note = get_object_or_404(Note, pk=pk, user=request.user)
@@ -114,6 +97,24 @@ def note_delete(request, pk):
         return redirect('note_list')
 
     return render(request, 'notes_app/note_confirm_delete.html', {'note': note})
+
+
+@login_required
+def note_create(request):
+    """Создание новой заметки"""
+    if request.method == 'POST':
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+            messages.success(request, 'Заметка создана!')
+            return redirect('note_list')
+    else:
+        form = NoteForm()
+
+    return render(request, 'notes_app/note_form.html', {'form': form})
+
 
 
 @login_required
