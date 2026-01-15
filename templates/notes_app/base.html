@@ -134,14 +134,21 @@
             <h1>Система заметок</h1>
             <div class="user-info">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'home' %}" class="btn">Все пользователи</a>
-                    <a href="{% url 'note_list' %}" class="btn">Мои заметки</a>
-                    <span class="username">{{ user.username }}</span>
-                    <a href="{% url 'logout' %}" class="btn logout-btn">Выйти</a>
+                {% if user.is_superuser %}
+                    <a href="{% url 'admin:index' %}" class="btn" style="background: #d35400;">Админка</a>
+                    {% endif %}
+                <a href="{% url 'home' %}" class="btn">Все пользователи</a>
+                <a href="{% url 'note_list' %}" class="btn">Мои заметки</a>
+                <span class="username">{{ user.username }}</span>
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn logout-btn">Выйти</button>
+                </form>
                 {% else %}
                     <a href="{% url 'home' %}" class="btn">Главная</a>
                     <a href="{% url 'login' %}" class="btn">Войти</a>
                     <a href="{% url 'register' %}" class="btn" style="background: #2ecc71;">Регистрация</a>
+
                 {% endif %}
             </div>
         </div>
