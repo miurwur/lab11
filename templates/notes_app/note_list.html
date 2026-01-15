@@ -1,0 +1,88 @@
+{% extends 'notes_app/base.html' %}
+
+{% block title %}Мои заметки{% endblock %}
+
+{% block content %}
+<h2>Мои заметки</h2>
+
+<!-- Форма поиска -->
+<form method="get" action="{% url 'note_search' %}" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+    <input type="text" name="q" placeholder="Поиск по заголовку, содержанию или тегам..."
+           value="{{ search_query|default:'' }}"
+           style="padding: 8px; flex-grow: 1; max-width: 400px;">
+    <button type="submit" class="btn" style="white-space: nowrap;">Найти</button>
+    {% if search_query %}
+        <a href="{% url 'note_list' %}" class="btn" style="background: #6c757d;">✕ Сбросить</a>
+    {% endif %}
+</form>
+
+<!-- Кнопки действий -->
+<div style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <a href="{% url 'note_create' %}" class="btn">+ Создать заметку</a>
+    <a href="{% url 'home' %}" class="btn" style="background: #6c757d;">Все пользователи</a>
+</div>
+
+<hr>
+
+<!-- Результаты -->
+{% if notes %}
+    <p>Найдено заметок: {{ notes|length }}</p>
+
+    {% for note in notes %}
+    <div class="note" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+        <h3 style="margin-top: 0; color: #333;">{{ note.title }}</h3>
+
+        {% if note.tags %}
+            <div style="margin-bottom: 10px;">
+                <strong>Теги:</strong>
+                <span style="background: #e9ecef; padding: 3px 8px; border-radius: 3px; margin-right: 5px;">
+                    {{ note.tags }}
+                </span>
+            </div>
+        {% endif %}
+
+        <p style="margin: 10px 0; line-height: 1.5;">
+            {{ note.content|truncatechars:200 }}
+            {% if note.content|length > 200 %}
+                <span style="color: #666;">...</span>
+            {% endif %}
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+            <small style="color: #666;">
+                Создано: {{ note.created_at|date:"d.m.Y H:i" }} |
+                Обновлено: {{ note.updated_at|date:"d.m.Y H:i" }}
+            </small>
+
+            <div style="display: flex; gap: 8px;">
+                <a href="{% url 'note_edit' note.pk %}" class="btn" style="padding: 5px 12px; font-size: 14px;">
+                    Редактировать
+                </a>
+                <a href="{% url 'note_delete' note.pk %}" class="btn btn-danger" style="padding: 5px 12px; font-size: 14px;">
+                    Удалить
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div style="text-align: center; padding: 40px; border: 2px dashed #ddd; border-radius: 5px;">
+        {% if search_query %}
+            <p style="font-size: 18px;">По запросу <strong>"{{ search_query }}"</strong> ничего не найдено</p>
+            <p>Попробуйте другие ключевые слова или <a href="{% url 'note_list' %}">посмотрите все заметки</a></p>
+        {% else %}
+            <p style="font-size: 18px;">У вас пока нет заметок</p>
+            <p>Создайте первую заметку!</p>
+            <a href="{% url 'note_create' %}" class="btn" style="margin-top: 15px;">+ Создать первую заметку</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+<!-- Пагинация (если нужно позже) -->
+{% if notes|length > 10 %}
+    <div style="margin-top: 20px; text-align: center;">
+        <span style="color: #666;">Показано {{ notes|length }} заметок</span>
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'notes_app/base.html' %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}✏Редактировать{% else %}Создать{% endif %} заметку</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Django создаст все поля автоматически -->
+    <button type="submit" class="btn">Сохранить</button>
+    <a href="{% url 'note_list' %}" class="btn" style="background: #6c757d;">Отмена</a>
+</form>
+{% endblock %}
