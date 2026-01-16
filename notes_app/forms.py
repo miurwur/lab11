@@ -3,20 +3,21 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Note
 
-
+# в стандартную UserCreationForm добавляется раздел email
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
         label='Email',
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@mail.com'})
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@mail.com'}) # placeholder будет виден на сайте как подсказка
     )
 
+    # форма регистрации пользователя
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2') # что показывается на странице
 
     def save(self, commit=True):
-        user = super().save(commit=False)
+        user = super().save(commit=False) # вызывает родительский класс
         user.email = self.cleaned_data['email']
         if commit:
             user.save()

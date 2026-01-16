@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.note_list, name='note_list'),  # список заметок
     path('search/', views.note_search, name='note_search'),
     path('create/', views.note_create, name='note_create'),
-    path('edit/<int:pk>/', views.note_edit, name='note_edit'),
+    path('edit/<int:pk>/', views.note_edit, name='note_edit'),  # пр: /notes/edit/5/
     path('delete/<int:pk>/', views.note_delete, name='note_delete'),
     path('register/', views.register, name='register'),
 ]

@@ -46,3 +46,6 @@ urlpatterns = [
 # ]
 
 # path(route, view, name=None)  name - "псевдоним" url для удобного обращения
+# Вместо:
+# <a href="/notes/create/">
+# <a href="{% url 'note_create' %}">Создать заметку</a>
