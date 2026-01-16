@@ -34,11 +34,11 @@ del db.sqlite3
 Далее повторить шаги 3-5
 
 ## Архитектура приложения (MVC):
-# Models:
+### Models:
 notes_app/models.py - структура данных:  
 **class Note(models.Model)**  
 
-# Controllers:
+### Controllers:
 **notes_app/views.py - бизнес-логика:**  
 home() - главная страница со списком пользователей
 note_list() - список заметок текущего пользователя
@@ -47,3 +47,33 @@ note_create(), note_edit(), note_delete() - CRUD операции
 register() - регистрация пользователя
 custom_login() - вход в систему
 custom_logout() - выход из системы
+
+### Views:
+**templates/notes_app/ - HTML шаблоны:**  
+base.html - базовый шаблон (наследуется всеми страницами)
+home.html - главная страница с таблицей пользователей
+note_list.html - список заметок с поиском
+note_form.html - форма создания/редактирования заметки
+login.html, register.html - страницы аутентификации
+
+## Структура проекта
+lab11/
+├── config/                 # Конфигурация Django
+│   ├── settings.py        # Настройки приложения
+│   ├── urls.py            # Корневые URL-адреса
+│   └── ...               # Доп. файлы конфигурации
+├── notes_app/             # Основное приложение
+│   ├── models.py         # Модели данных
+│   ├── views.py          # Контроллеры (12 функций)
+│   ├── forms.py          # Формы (NoteForm, CustomUserCreationForm)
+│   ├── urls.py           # URL-адреса приложения
+│   └── ...               # Остальные компоненты
+├── templates/             # HTML шаблоны
+│   └── notes_app/        # Шаблоны для приложения
+├── static/               # Статические файлы (CSS, JS)
+├── manage.py            # Скрипт управления Django
+├── requirements.txt     # Зависимости Python
+└── README.md           # Этот файл
+
+## Организация работы в команде
+Использовалась Git Flow
