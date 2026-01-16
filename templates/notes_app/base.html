@@ -5,126 +5,249 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Мои заметки{% endblock %}</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px 20px;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eee;
+            margin-bottom: 48px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         .header h1 {
             margin: 0;
-            color: #2c3e50;
+            font-size: 2.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            text-decoration: none;
-            background: #3498db;
-            color: white;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background: #2980b9;
-            text-decoration: none;
-            color: white;
-        }
-        .btn-danger {
-            background: #e74c3c;
-        }
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-        .note {
-            border: 1px solid #e0e0e0;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            background: #fff;
-            transition: box-shadow 0.3s;
-        }
-        .note:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-            font-family: inherit;
-        }
-        .messages {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px 0;
-        }
-        .success {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border-radius: 5px;
-            border-left: 4px solid #28a745;
-            margin-bottom: 10px;
-        }
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 12px;
-            border-radius: 5px;
-            border-left: 4px solid #dc3545;
-            margin-bottom: 10px;
-        }
-        .warning {
-            background: #fff3cd;
-            color: #856404;
-            padding: 12px;
-            border-radius: 5px;
-            border-left: 4px solid #ffc107;
-            margin-bottom: 10px;
-        }
+
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 16px;
         }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(46, 204, 113, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(149, 165, 166, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(149, 165, 166, 0.4);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+
         .username {
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .logout-btn {
-            background: #95a5a6;
+
+        form.inline-form button {
+            padding: 12px 20px;
+            font-size: 14px;
         }
-        .logout-btn:hover {
-            background: #7f8c8d;
+
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px 0;
+            max-width: 600px;
+        }
+
+        .messages li {
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .success {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(40, 167, 69, 0.15) 100%);
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .error {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(220, 53, 69, 0.15) 100%);
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.15) 100%);
+            color: #856404;
+            border-left: 5px solid #ffc107;
+        }
+
+        .note {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .note:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+                padding: 24px;
+            }
+
+            .user-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 24px 16px;
+            }
         }
     </style>
 </head>
@@ -135,20 +258,19 @@
             <div class="user-info">
                 {% if user.is_authenticated %}
                 {% if user.is_superuser %}
-                    <a href="{% url 'admin:index' %}" class="btn" style="background: #d35400;">Админка</a>
-                    {% endif %}
-                <a href="{% url 'home' %}" class="btn">Все пользователи</a>
-                <a href="{% url 'note_list' %}" class="btn">Мои заметки</a>
+                    <a href="{% url 'admin:index' %}" class="btn btn-admin">Админка</a>
+                {% endif %}
+                <a href="{% url 'home' %}" class="btn btn-primary">Все пользователи</a>
+                <a href="{% url 'note_list' %}" class="btn btn-primary">Мои заметки</a>
                 <span class="username">{{ user.username }}</span>
-                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                <form method="post" action="{% url 'logout' %}" class="inline-form">
                 {% csrf_token %}
-                <button type="submit" class="btn logout-btn">Выйти</button>
+                <button type="submit" class="btn btn-secondary">Выйти</button>
                 </form>
                 {% else %}
-                    <a href="{% url 'home' %}" class="btn">Главная</a>
-                    <a href="{% url 'login' %}" class="btn">Войти</a>
-                    <a href="{% url 'register' %}" class="btn" style="background: #2ecc71;">Регистрация</a>
-
+                    <a href="{% url 'home' %}" class="btn btn-primary">Главная</a>
+                    <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
+                    <a href="{% url 'register' %}" class="btn btn-success">Регистрация</a>
                 {% endif %}
             </div>
         </div>

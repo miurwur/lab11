@@ -1,11 +1,150 @@
 {% extends 'notes_app/base.html' %}
 
 {% block content %}
-<h2>Вход в систему</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn">Войти</button>
-</form>
-<p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a></p>
+<div class="login-page">
+    <div class="login-card">
+        <header class="login-header">
+            <h2>Вход в систему</h2>
+            <p class="subtitle">Добро пожаловать обратно</p>
+        </header>
+
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary full-width">Войти</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Нет аккаунта? <a href="{% url 'register' %}" class="register-link">Зарегистрируйтесь</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        padding: 40px 20px;
+    }
+
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 28px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 48px 40px;
+        width: 100%;
+        max-width: 440px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .login-card:hover {
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        transform: translateY(-4px);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+
+    .login-header h2 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 0 8px 0;
+    }
+
+    .subtitle {
+        color: #718096;
+        font-size: 16px;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .login-form p {
+        margin: 0;
+    }
+
+    .login-form input {
+        margin-bottom: 0;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .login-footer {
+        text-align: center;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .login-footer p {
+        margin: 0;
+        color: #4a5568;
+        font-size: 16px;
+    }
+
+    .register-link {
+        color: #27ae60;
+        text-decoration: none;
+        font-weight: 700;
+        position: relative;
+        padding: 4px 12px;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(135deg, rgba(46, 204, 113, 0.08) 0%, rgba(39, 174, 96, 0.08) 100%);
+    }
+
+    .register-link:hover {
+        background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(39, 174, 96, 0.15) 100%);
+        box-shadow: 0 6px 16px rgba(46, 204, 113, 0.2);
+        transform: translateY(-1px);
+    }
+
+    /* Улучшение стилей формы Django */
+    .login-form input[type="text"],
+    .login-form input[type="email"],
+    .login-form input[type="password"] {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .login-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 15px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .login-page {
+            padding: 24px 16px;
+        }
+
+        .login-card {
+            padding: 36px 28px;
+            margin: 0;
+        }
+
+        .login-header h2 {
+            font-size: 1.875rem;
+        }
+    }
+</style>
 {% endblock %}

@@ -1,12 +1,221 @@
 {% extends 'notes_app/base.html' %}
 
 {% block content %}
-<h2>{% if form.instance.pk %}✏Редактировать{% else %}Создать{% endif %} заметку</h2>
+<div class="note-form-page">
+    <div class="form-container">
+        <div class="form-card">
+            <header class="form-header">
+                {% if form.instance.pk %}
+                    <div class="form-icon">✏️</div>
+                    <h2>Редактировать заметку</h2>
+                {% else %}
+                    <div class="form-icon">➕</div>
+                    <h2>Создать заметку</h2>
+                {% endif %}
+                <p class="form-subtitle">
+                    {% if form.instance.pk %}
+                        Обновите содержимое заметки
+                    {% else %}
+                        Добавьте новую заметку в свою коллекцию
+                    {% endif %}
+                </p>
+            </header>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}  <!-- Django создаст все поля автоматически -->
-    <button type="submit" class="btn">Сохранить</button>
-    <a href="{% url 'note_list' %}" class="btn" style="background: #6c757d;">Отмена</a>
-</form>
+            <form method="post" class="note-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary full-width">
+                        Сохранить заметку
+                    </button>
+                    <a href="{% url 'note_list' %}" class="btn btn-secondary full-width">
+                        Отмена
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .note-form-page {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 680px;
+    }
+
+    .form-card {
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(25px);
+        border-radius: 32px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 52px 44px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #a55eea 100%);
+        border-radius: 32px 32px 0 0;
+    }
+
+    .form-card:hover {
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.16);
+        transform: translateY(-4px);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 44px;
+    }
+
+    .form-icon {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        display: block;
+        animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes bounceIn {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    .form-header h2 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 0 12px 0;
+    }
+
+    .form-subtitle {
+        color: #718096;
+        font-size: 16px;
+        margin: 0;
+        font-weight: 500;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .note-form {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .note-form p {
+        margin: 0;
+    }
+
+    .note-form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 15px;
+    }
+
+    .note-form input,
+    .note-form textarea,
+    .note-form select {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border-radius: 20px !important;
+        padding: 18px 24px !important;
+        font-size: 16px !important;
+        border: 2px solid #e2e8f0 !important;
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(12px) !important;
+    }
+
+    .note-form input:focus,
+    .note-form textarea:focus,
+    .note-form select:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12) !important;
+        transform: translateY(-2px) !important;
+        background: rgba(255, 255, 255, 1) !important;
+    }
+
+    .note-form textarea {
+        min-height: 180px;
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    .form-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4) !important;
+        font-weight: 700 !important;
+        font-size: 16px !important;
+        padding: 20px 28px !important;
+        border-radius: 20px !important;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 18px 36px rgba(102, 126, 234, 0.5) !important;
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%) !important;
+        box-shadow: 0 8px 20px rgba(149, 165, 166, 0.3) !important;
+        font-weight: 600 !important;
+        padding: 20px 28px !important;
+        border-radius: 20px !important;
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 12px 28px rgba(149, 165, 166, 0.4) !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .form-card {
+            padding: 40px 28px;
+            margin: 0;
+        }
+
+        .form-header h2 {
+            font-size: 1.875rem;
+        }
+
+        .form-icon {
+            font-size: 3rem;
+        }
+    }
+</style>
 {% endblock %}
