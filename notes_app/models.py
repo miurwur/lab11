@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
+# cоздаёт таблицу со столбцами: user, title, content, tags, created_at, updated_at.
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -16,8 +16,11 @@ class Note(models.Model):
         verbose_name = 'Заметка'
         verbose_name_plural = 'Заметки'
 
+    # для админки
+    # строковое представление, выводит заголовок, имя пользователя
     def __str__(self):
         return f'{self.title} ({self.user.username})'
 
+    # возвращает url для просмотра заметки
     def get_absolute_url(self):
         return reverse('note_list')
