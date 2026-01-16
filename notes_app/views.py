@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -16,7 +14,6 @@ from .models import Note
 
 
 def register(request):
-    """Регистрация нового пользователя"""
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
