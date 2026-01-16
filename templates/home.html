@@ -3,30 +3,195 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
-<h1>Пользователи и их заметки</h1>
+<div class="dashboard-container">
+    <header class="page-header">
+        <h1>Пользователи и их заметки</h1>
+    </header>
 
-<table>
-    <thead>
-        <tr>
-            <th>Пользователь</th>
-            <th>Email</th>
-            <th>Количество заметок</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.notes_count }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <div class="stats-table-wrapper">
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Пользователь</th>
+                    <th>Email</th>
+                    <th>Количество заметок</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="username">{{ user.username }}</td>
+                    <td class="email">{{ user.email }}</td>
+                    <td class="count">{{ user.notes_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-{% if user.is_authenticated %}
-    <a href="{% url 'note_list' %}" class="btn">Мои заметки</a>
-{% else %}
-    <p><a href="{% url 'login' %}">Войдите</a>, чтобы создавать заметки</p>
-{% endif %}
+    <div class="action-section">
+        {% if user.is_authenticated %}
+            <a href="{% url 'note_list' %}" class="btn btn-primary">Мои заметки</a>
+        {% else %}
+            <p class="guest-message">
+                <a href="{% url 'login' %}">Войдите</a>, чтобы создавать заметки
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+    }
+
+    .stats-table-wrapper {
+        overflow-x: auto;
+        margin-bottom: 48px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stats-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        overflow: hidden;
+        min-width: 600px;
+    }
+
+    .stats-table th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 24px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    .stats-table td {
+        padding: 20px 24px;
+        border-bottom: 1px solid #f1f5f9;
+        transition: all 0.3s ease;
+    }
+
+    .stats-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        transform: scale(1.01);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .username {
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 16px;
+    }
+
+    .email {
+        color: #4a5568;
+        font-size: 15px;
+    }
+
+    .count {
+        font-weight: 700;
+        color: #667eea;
+        font-size: 18px;
+        text-align: right;
+    }
+
+    .action-section {
+        text-align: center;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 16px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn:active {
+        transform: translateY(-1px);
+    }
+
+    .guest-message {
+        font-size: 18px;
+        color: #4a5568;
+        margin: 0;
+    }
+
+    .guest-message a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .guest-message a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+
+    .guest-message a:hover::after {
+        width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 24px 16px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            padding: 16px 12px;
+        }
+    }
+</style>
 {% endblock %}

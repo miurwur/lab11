@@ -1,36 +1,213 @@
 {% extends 'notes_app/base.html' %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Все пользователи{% endblock %}
 
 {% block content %}
-<h2>Все пользователи</h2>
+<div class="users-page">
+    <header class="page-header">
+        <h2>Все пользователи</h2>
+    </header>
 
-<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-    <thead>
-        <tr style="background: #f2f2f2;">
-            <th style="padding: 12px; text-align: left;">Пользователь</th>
-            <th style="padding: 12px; text-align: left;">Email</th>
-            <th style="padding: 12px; text-align: left;">Количество заметок</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 12px;">{{ user.username }}</td>
-            <td style="padding: 12px;">{{ user.email|default:"—" }}</td>
-            <td style="padding: 12px;">{{ user.notes_count }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3" style="padding: 20px; text-align: center;">Нет пользователей</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <div class="users-table-container">
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>Пользователь</th>
+                    <th>Email</th>
+                    <th>Количество заметок</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="username">{{ user.username }}</td>
+                    <td class="email">{{ user.email|default:"—" }}</td>
+                    <td class="note-count">{{ user.notes_count }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="empty-state">
+                        <div class="empty-icon">👥</div>
+                        <p>Нет пользователей</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-{% if user.is_authenticated %}
-    <a href="{% url 'note_list' %}" class="btn">Мои заметки</a>
-{% else %}
-    <p>Чтобы создавать заметки, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a></p>
-{% endif %}
+    <div class="users-actions">
+        {% if user.is_authenticated %}
+            <a href="{% url 'note_list' %}" class="btn btn-primary">Мои заметки</a>
+        {% else %}
+            <p class="auth-prompt">
+                Чтобы создавать заметки,
+                <a href="{% url 'login' %}" class="auth-link login">войдите</a>
+                или
+                <a href="{% url 'register' %}" class="auth-link register">зарегистрируйтесь</a>
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .users-page {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    .page-header h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0;
+    }
+
+    .users-table-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+        margin-bottom: 48px;
+    }
+
+    .users-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .users-table th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 24px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+    }
+
+    .users-table td {
+        padding: 20px 24px;
+        border-bottom: 1px solid #f1f5f9;
+        transition: all 0.3s ease;
+    }
+
+    .users-table tbody tr {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+
+    .users-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        transform: scale(1.005);
+        box-shadow: inset 0 2px 8px rgba(102, 126, 234, 0.05);
+    }
+
+    .username {
+        font-weight: 700;
+        color: #2d3748;
+        font-size: 16px;
+    }
+
+    .email {
+        color: #4a5568;
+        font-size: 15px;
+        word-break: break-all;
+    }
+
+    .note-count {
+        font-weight: 700;
+        color: #667eea;
+        font-size: 18px;
+        text-align: right;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: inline-block;
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px !important;
+        color: #718096;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        margin-bottom: 16px;
+        opacity: 0.5;
+    }
+
+    .users-actions {
+        text-align: center;
+    }
+
+    .auth-prompt {
+        font-size: 18px;
+        color: #4a5568;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .auth-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        position: relative;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .auth-link.login:hover {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    }
+
+    .auth-link.register:hover {
+        background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%);
+        box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15);
+        color: #27ae60;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .users-table th,
+        .users-table td {
+            padding: 16px 12px;
+            font-size: 14px;
+        }
+
+        .page-header h2 {
+            font-size: 1.75rem;
+        }
+
+        .users-table-container {
+            border-radius: 20px;
+            margin-bottom: 32px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .users-table {
+            font-size: 14px;
+        }
+
+        .username, .email {
+            font-size: 14px;
+        }
+    }
+</style>
 {% endblock %}
