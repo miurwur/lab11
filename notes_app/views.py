@@ -135,3 +135,22 @@ def note_search(request):
         'notes': notes,
         'search_query': query
     })
+
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Note
+
+
+@login_required
+def profile_view(request):
+    user = request.user
+    total_notes = Note.objects.filter(user=user).count()
+    last_activity = Note.objects.filter(user=user).order_by('-updated_at').first()
+    last_activity_time = last_activity.updated_at if last_activity else user.date_joined
+
+    context = {
+        'total_notes': total_notes,
+        'last_activity': last_activity_time,
+    }
+    return render(request, 'notes_app/profile.html', context)

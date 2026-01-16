@@ -1,7 +1,132 @@
 {% extends 'notes_app/base.html' %}
 
 {% block content %}
-<h2>Вы вышли из системы</h2>
-<p><a href="{% url 'login' %}">Войти снова</a></p>
-<p><a href="{% url 'home' %}">На главную</a></p>
+<div class="logout-page">
+    <div class="logout-card">
+        <div class="logout-icon">👋</div>
+
+        <header class="logout-header">
+            <h2>Вы вышли из системы</h2>
+            <p class="logout-subtitle">До скорой встречи!</p>
+        </header>
+
+        <div class="logout-actions">
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                Войти снова
+            </a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                На главную
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .logout-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 70vh;
+        padding: 40px 20px;
+    }
+
+    .logout-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(25px);
+        border-radius: 32px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        padding: 64px 48px;
+        text-align: center;
+        width: 100%;
+        max-width: 480px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logout-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        border-radius: 32px 32px 0 0;
+    }
+
+    .logout-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2);
+    }
+
+    .logout-icon {
+        font-size: 5rem;
+        margin-bottom: 24px;
+        opacity: 0.8;
+        animation: wave 2s infinite;
+    }
+
+    @keyframes wave {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(10deg); }
+        75% { transform: rotate(-10deg); }
+    }
+
+    .logout-header {
+        margin-bottom: 48px;
+    }
+
+    .logout-header h2 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 0 12px 0;
+    }
+
+    .logout-subtitle {
+        color: #718096;
+        font-size: 18px;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .logout-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .logout-actions .btn {
+        padding: 16px 28px;
+        font-size: 16px;
+        border-radius: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .logout-page {
+            padding: 24px 16px;
+        }
+
+        .logout-card {
+            padding: 48px 32px;
+            margin: 0;
+        }
+
+        .logout-header h2 {
+            font-size: 1.875rem;
+        }
+
+        .logout-icon {
+            font-size: 4rem;
+        }
+    }
+</style>
 {% endblock %}

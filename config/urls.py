@@ -32,6 +32,7 @@ urlpatterns = [
     ), name='logout'),
     path('register/', register, name='register'),
     path('notes/', include('notes_app.urls')),
+
 ]
 
 
