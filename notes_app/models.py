@@ -4,7 +4,7 @@ from django.urls import reverse
 
 # cоздаёт таблицу со столбцами: user, title, content, tags, created_at, updated_at.
 class Note(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь') # при удалении user удаляются все данные
     title = models.CharField(max_length=200, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Содержание')
     tags = models.CharField(max_length=255, blank=True, verbose_name='Теги (через запятую)')
