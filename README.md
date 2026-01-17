@@ -77,6 +77,8 @@ lab11/
   
 ## Организация работы в команде  
 - Использовалась GitHub Flow
+<img width="1668" height="939" alt="image" src="https://github.com/user-attachments/assets/8290592f-6ad8-40c3-a947-2ebb43528f8b" />  
+
 
 ### Ветвление:
 - master - основная ветка, всегда стабильная версия приложения  
