@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout/', custom_logout, name='logout'),
     path('register/', register, name='register'),
     path('notes/', include('notes_app.urls')),
+
 ]
 
 

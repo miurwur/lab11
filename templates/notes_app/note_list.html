@@ -22,7 +22,7 @@
             <div class="search-input-wrapper">
                 <input type="text" name="q" placeholder="Поиск по заголовку, содержанию или тегам..."
                        value="{{ search_query|default:'' }}" class="search-input">
-                <div class="search-icon"></div>
+                <div class="search-icon">🔍</div>
             </div>
             <button type="submit" class="btn btn-primary search-btn">Найти</button>
             {% if search_query %}
@@ -86,13 +86,13 @@
         </div>
     {% else %}
         <div class="empty-state">
-<!--            <div class="empty-icon">-->
-<!--                {% if search_query %}-->
-<!--                    🔍-->
-<!--                {% else %}-->
-<!--                    📝-->
-<!--                {% endif %}-->
-<!--            </div>-->
+            <div class="empty-icon">
+                {% if search_query %}
+                    🔍
+                {% else %}
+                    📝
+                {% endif %}
+            </div>
             <h3 class="empty-title">
                 {% if search_query %}
                     Ничего не найдено
