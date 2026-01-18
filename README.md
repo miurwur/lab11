@@ -106,4 +106,4 @@ lab11/
 - интуитивно понятный итерфейс с непегруженным и гармоничным дизайном
 
 ## Работа приложения:  
-https://disk.yandex.ru/i/iQC0_vVP2S2ogg
+[https://disk.yandex.ru/i/iQC0_vVP2S2ogg](https://disk.yandex.ru/i/JXGiLFLRhFm_DA)
